@@ -1,21 +1,19 @@
 import React,{useState} from 'react'
 import MainPagelayout from '../components/MainPagelayout'
+import {apiGet} from '../misc/config'
 
 const Home = () => {
 
     const [input,setInput] = useState('')
+    const [results,setResults] = useState(null)
 
     const onSearch = () => {
 
-        // https://api.tvmaze.com/search/shows?q=girls
-
-        fetch(`https://api.tvmaze.com/search/shows?q=${input}`).
-        then(r => r.json()).
-        then(result => {
-            console.log(result)
+        apiGet(`/search/shows?q=${input}`).then(result => {
+            setResults(result)
         })
-
-    }
+        // https://api.tvmaze.com/search/shows?q=girls
+     }
 
     const onInputChange = (ev) =>{
         setInput(ev.target.value)
@@ -28,6 +26,16 @@ const Home = () => {
         }
     }
 
+    const renderResults = () =>{
+        if (results && results.length === 0){
+            return <div>No Result</div>
+        }
+        if (results && results.length > 0){
+            return <div> {results.map( (item)=><div key={item.show.id}>{item.show.name}</div> )} </div>
+        }
+        return null;
+    }
+
  
 
 
@@ -35,6 +43,8 @@ const Home = () => {
         <MainPagelayout>
            <input type="text" onChange={onInputChange} onKeyDown={onKeyDown} value={input} />
            <button type="button" onClick={onSearch}>Search</button>
+
+           {renderResults()}
         </MainPagelayout>
     )
 }
