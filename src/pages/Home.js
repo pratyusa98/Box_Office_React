@@ -3,10 +3,11 @@ import ActorGrid from '../components/actor/ActorGrid'
 import MainPagelayout from '../components/MainPagelayout'
 import ShowGrid from '../components/show/ShowGrid'
 import {apiGet} from '../misc/config'
+import { useLastQuery } from '../misc/Custom-hooks'
 
 const Home = () => {
 
-    const [input,setInput] = useState('')
+    const [input, setInput] = useLastQuery();
     const [results,setResults] = useState(null)
     const [searchOption,setSearchOption] = useState('shows')
 
@@ -19,6 +20,8 @@ const Home = () => {
         })
         // https://api.tvmaze.com/search/shows?q=girls
      }
+
+     
 
     const onInputChange = (ev) =>{
         setInput(ev.target.value)
