@@ -4,6 +4,7 @@ import MainPagelayout from '../components/MainPagelayout'
 import ShowGrid from '../components/show/ShowGrid'
 import {apiGet} from '../misc/config'
 import { useLastQuery } from '../misc/Custom-hooks'
+import { RadioInputsWrapper, SearchButtonWrapper, SearchInput } from './Home.Styled'
 
 const Home = () => {
 
@@ -61,23 +62,26 @@ const Home = () => {
 
     return (
         <MainPagelayout>
-           <input type="text" placeholder="Search For Something" onChange={onInputChange} onKeyDown={onKeyDown} value={input} />
+           <SearchInput type="text" placeholder="Search For Something" onChange={onInputChange} onKeyDown={onKeyDown} value={input} />
            
-           <div>
+           <RadioInputsWrapper>
+               <div>
                <label htmlFor='shows-search'>
                    Shows
                    <input id='shows-search' type='radio' value="shows" checked={isShowSearch} onChange={onRadioChange} />
                </label>
-
+               </div>
+               <div>
                <label htmlFor='actor-search'>
                    Actor
                    <input id='actor-search' type='radio' value="people" checked={!isShowSearch} onChange={onRadioChange} />
                </label>
-           </div>
+               </div>
+           </RadioInputsWrapper>
            
-           
+           <SearchButtonWrapper>
            <button type="button" onClick={onSearch}>Search</button>
-
+           </SearchButtonWrapper>
            {renderResults()}
         </MainPagelayout>
     )
